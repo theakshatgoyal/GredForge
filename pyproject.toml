@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gredforge"
+version = "0.1.0"
+description = "A local-first research organization and workflow platform."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "typer",
+]
+
+[project.scripts]
+gredforge = "gredforge.cli.main:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]

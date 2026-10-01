@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GredForge</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">G</div>
+                <div>
+                    <h1>GredForge</h1>
+                    <span>Research Infrastructure</span>
+                </div>
+            </div>
+
+            <nav>
+                <button class="nav-item active" onclick="showPage('dashboard')">
+                    Dashboard
+                </button>
+
+                <button class="nav-item" onclick="showPage('projects')">
+                    Projects
+                </button>
+
+                <button class="nav-item" onclick="showPage('workflows')">
+                    Workflows
+                </button>
+
+                <button class="nav-item" onclick="showPage('runs')">
+                    Runs
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span>LOCAL INSTANCE</span>
+                <strong>v0.1.0</strong>
+            </div>
+        </aside>
+
+        <main class="main">
+
+            <header class="topbar">
+                <div>
+                    <span class="eyebrow">RESEARCH COMMAND CENTER</span>
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+
+                <button class="primary-button" onclick="openModal()">
+                    + New Project
+                </button>
+            </header>
+
+            <section id="dashboard" class="page active">
+
+                <div class="hero">
+                    <div>
+                        <span class="eyebrow">LOCAL-FIRST RESEARCH</span>
+                        <h3>Turn research into reproducible workflows.</h3>
+                        <p>
+                            Organize projects, execute workflows, and preserve
+                            research artifacts locally.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <span>PROJECTS</span>
+                        <strong id="project-count">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>WORKFLOWS</span>
+                        <strong id="workflow-count">0</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <span>RUNS</span>
+                        <strong id="run-count">0</strong>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <h3>Active Projects</h3>
+                        <button onclick="showPage('projects')">View all</button>
+                    </div>
+
+                    <div id="project-list" class="project-list"></div>
+                </div>
+
+            </section>
+
+            <section id="projects" class="page">
+                <div class="section-header">
+                    <div>
+                        <span class="eyebrow">WORKSPACES</span>
+                        <h3>Research Projects</h3>
+                    </div>
+
+                    <button class="primary-button" onclick="openModal()">
+                        + Create Project
+                    </button>
+                </div>
+
+                <div id="all-projects" class="project-list"></div>
+            </section>
+
+            <section id="workflows" class="page">
+                <div class="empty-state">
+                    <span class="eyebrow">PHASE 3</span>
+                    <h3>Workflow Engine</h3>
+                    <p>Workflow execution will appear here.</p>
+                </div>
+            </section>
+
+            <section id="runs" class="page">
+                <div class="empty-state">
+                    <span class="eyebrow">EXECUTION HISTORY</span>
+                    <h3>Runs</h3>
+                    <p>Workflow runs will appear here.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-card">
+            <button class="close" onclick="closeModal()">×</button>
+
+            <span class="eyebrow">NEW RESEARCH PROJECT</span>
+            <h3>Create a project</h3>
+
+            <form onsubmit="createProject(event)">
+                <label>
+                    Project name
+                    <input id="project-name" required
+                           placeholder="e.g. Market Regime Analysis">
+                </label>
+
+                <label>
+                    Description
+                    <textarea id="project-description"
+                              placeholder="What are you researching?"></textarea>
+                </label>
+
+                <button class="primary-button" type="submit">
+                    Create Project
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
