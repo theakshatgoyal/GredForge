@@ -1,4 +1,19 @@
 # GredForge
+## How does this work?
+> **Just install the application by entering the following in your terminal:**
+
+For Debian-based OS:
+
+> **sudo apt install gredforge**
+
+For RedHat-based OS:
+
+> **sudo dnf install gredforge**
+
+For Arch-based OS:
+
+> **sudo pacman install gredforge**
+
 # GredForge Architecture Spine
 
 ## Core Principle
