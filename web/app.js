@@ -4,9 +4,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --------------------------------------------------------
+    // ========================================================
     // Research state
-    // --------------------------------------------------------
+    // ========================================================
 
     const researchState = {
         question: "",
@@ -16,73 +16,78 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    // --------------------------------------------------------
-    // Elements
-    // --------------------------------------------------------
+    // ========================================================
+    // Main elements
+    // ========================================================
 
-    const typedHeading = document.getElementById("typed-heading");
+    const typedHeading =
+        document.getElementById("typed-heading");
 
-    const brainDumpPanel = document.getElementById("brain-dump-panel");
-    const brainDumpToggle = document.getElementById("brain-dump-toggle");
+    const brainDumpPanel =
+        document.getElementById("brain-dump-panel");
 
-    const continueButton = document.getElementById("continue-button");
-    const researchQuestion = document.getElementById("research-question");
+    const brainDumpToggle =
+        document.getElementById("brain-dump-toggle");
 
-    const fieldStage = document.getElementById("field-stage");
-    const backButton = document.getElementById("back-button");
+    const researchQuestion =
+        document.getElementById("research-question");
 
-    const navItems = document.querySelectorAll(".nav-item");
+    const continueButton =
+        document.getElementById("continue-button");
 
-    const app = document.querySelector(".app");
-    const sidebarToggle = document.getElementById("sidebar-toggle");
-
-    const workspacesPage = document.getElementById("workspaces-page");
-    const runsPage = document.getElementById("runs-page");
-    const knowledgePage = document.getElementById("knowledge-page");
-
-    const intakePage = document.querySelector(".intake");
+    const fieldStage =
+        document.getElementById("field-stage");
 
 
-    // --------------------------------------------------------
-    // 1. Typing animation
-    // --------------------------------------------------------
+    // ========================================================
+    // Typing animation
+    // ========================================================
 
-    const headingText = "What question do you wish to solve?";
+    const headingText =
+        "What question do you wish to solve?";
+
     let characterIndex = 0;
 
     function typeHeading() {
-        if (!typedHeading) return;
 
-        if (characterIndex < headingText.length) {
-            typedHeading.textContent += headingText[characterIndex];
-            characterIndex += 1;
-
-            setTimeout(typeHeading, 55);
+        if (!typedHeading) {
+            return;
         }
+
+        if (characterIndex >= headingText.length) {
+            return;
+        }
+
+        typedHeading.textContent +=
+            headingText[characterIndex];
+
+        characterIndex += 1;
+
+        setTimeout(typeHeading, 55);
     }
 
     typeHeading();
 
 
-    // --------------------------------------------------------
-    // 2. Brain dump toggle
-    // --------------------------------------------------------
+    // ========================================================
+    // Brain dump
+    // ========================================================
 
     if (brainDumpToggle && brainDumpPanel) {
 
         brainDumpToggle.addEventListener("click", () => {
 
-            const isClosed =
+            const closed =
                 brainDumpPanel.classList.toggle("closed");
 
             brainDumpToggle.setAttribute(
                 "aria-expanded",
-                String(!isClosed)
+                String(!closed)
             );
 
             brainDumpToggle.setAttribute(
                 "aria-label",
-                isClosed
+                closed
                     ? "Open brain dump"
                     : "Close brain dump"
             );
@@ -92,17 +97,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (arrow) {
                 arrow.textContent =
-                    isClosed ? "‹" : "›";
+                    closed ? "‹" : "›";
             }
         });
     }
 
 
-    // --------------------------------------------------------
-    // 3. Research question -> field selection
-    // --------------------------------------------------------
+    // ========================================================
+    // Intake step controller
+    // ========================================================
 
-    if (continueButton && researchQuestion && fieldStage) {
+    const steps = {
+        field: document.getElementById("field-step"),
+        objective: document.getElementById("objective-step"),
+        rigor: document.getElementById("rigor-step"),
+        created: document.getElementById("created-step")
+    };
+
+
+    function showStep(name) {
+
+        Object.values(steps).forEach(step => {
+
+            if (step) {
+                step.classList.remove("active");
+            }
+
+        });
+
+        if (steps[name]) {
+            steps[name].classList.add("active");
+        }
+    }
+
+
+    // ========================================================
+    // Question -> Field
+    // ========================================================
+
+    if (continueButton) {
 
         continueButton.addEventListener("click", () => {
 
@@ -131,31 +164,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             researchState.question = question;
 
+            showStep("field");
+
             fieldStage.classList.add("open");
 
             console.log(
-                "Research question:",
+                "Question:",
                 researchState.question
             );
         });
     }
 
 
-    // --------------------------------------------------------
-    // 4. Back from field selection
-    // --------------------------------------------------------
-
-    if (backButton && fieldStage) {
-
-        backButton.addEventListener("click", () => {
-            fieldStage.classList.remove("open");
-        });
-    }
-
-
-    // --------------------------------------------------------
-    // 5. Field selection
-    // --------------------------------------------------------
+    // ========================================================
+    // Field selection
+    // ========================================================
 
     const fieldOptions =
         document.querySelectorAll(".field-option");
@@ -171,76 +194,357 @@ document.addEventListener("DOMContentLoaded", () => {
             button.classList.add("selected");
 
             researchState.field =
-                button.textContent.trim();
+                button.dataset.field;
 
             console.log(
-                "Selected field:",
+                "Field:",
                 researchState.field
             );
         });
     });
 
 
-    // --------------------------------------------------------
-    // 6. Sidebar navigation
-    // --------------------------------------------------------
+    // ========================================================
+    // Field back
+    // ========================================================
+
+    const fieldBackButton =
+        document.getElementById("field-back-button");
+
+    if (fieldBackButton) {
+
+        fieldBackButton.addEventListener("click", () => {
+
+            fieldStage.classList.remove("open");
+
+            showStep("field");
+        });
+    }
+
+
+    // ========================================================
+    // Field -> Objective
+    // ========================================================
+
+    const fieldContinueButton =
+        document.getElementById("field-continue-button");
+
+    if (fieldContinueButton) {
+
+        fieldContinueButton.addEventListener("click", () => {
+
+            if (!researchState.field) {
+
+                alert("Please select a research field.");
+
+                return;
+            }
+
+            showStep("objective");
+
+        });
+    }
+
+
+    // ========================================================
+    // Objective selection
+    // ========================================================
+
+    const objectiveOptions =
+        document.querySelectorAll(".choice-option[data-objective]");
+
+    objectiveOptions.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            objectiveOptions.forEach(option => {
+                option.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+            researchState.objective =
+                button.dataset.objective;
+
+            console.log(
+                "Objective:",
+                researchState.objective
+            );
+        });
+    });
+
+
+    // ========================================================
+    // Objective back
+    // ========================================================
+
+    const objectiveBackButton =
+        document.getElementById("objective-back-button");
+
+    if (objectiveBackButton) {
+
+        objectiveBackButton.addEventListener("click", () => {
+            showStep("field");
+        });
+    }
+
+
+    // ========================================================
+    // Objective -> Rigor
+    // ========================================================
+
+    const objectiveContinueButton =
+        document.getElementById("objective-continue-button");
+
+    if (objectiveContinueButton) {
+
+        objectiveContinueButton.addEventListener("click", () => {
+
+            if (!researchState.objective) {
+
+                alert("Please select a research objective.");
+
+                return;
+            }
+
+            showStep("rigor");
+        });
+    }
+
+
+    // ========================================================
+    // Rigor selection
+    // ========================================================
+
+    const rigorOptions =
+        document.querySelectorAll(".choice-option[data-rigor]");
+
+    rigorOptions.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            rigorOptions.forEach(option => {
+                option.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+            researchState.rigor =
+                button.dataset.rigor;
+
+            console.log(
+                "Rigor:",
+                researchState.rigor
+            );
+        });
+    });
+
+
+    // ========================================================
+    // Rigor back
+    // ========================================================
+
+    const rigorBackButton =
+        document.getElementById("rigor-back-button");
+
+    if (rigorBackButton) {
+
+        rigorBackButton.addEventListener("click", () => {
+            showStep("objective");
+        });
+    }
+
+
+    // ========================================================
+    // Start research
+    // ========================================================
+
+    const startResearchButton =
+        document.getElementById("start-research-button");
+
+    if (startResearchButton) {
+
+        startResearchButton.addEventListener("click", async () => {
+
+            if (!researchState.rigor) {
+
+                alert("Please select a research rigor.");
+
+                return;
+            }
+
+            console.log(
+                "Submitting research:",
+                researchState
+            );
+
+            startResearchButton.disabled = true;
+
+            startResearchButton.textContent =
+                "Creating...";
+
+            try {
+
+                const response =
+                    await fetch("/api/research/intake", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify(
+                            researchState
+                        )
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.detail ||
+                        "Research creation failed."
+                    );
+                }
+
+
+                console.log(
+                    "Research created:",
+                    data
+                );
+
+
+                document.getElementById(
+                    "summary-field"
+                ).textContent =
+                    researchState.field;
+
+
+                document.getElementById(
+                    "summary-objective"
+                ).textContent =
+                    researchState.objective;
+
+
+                document.getElementById(
+                    "summary-rigor"
+                ).textContent =
+                    researchState.rigor;
+
+
+                document.getElementById(
+                    "created-message"
+                ).textContent =
+                    `Workspace "${data.name}" has been created.`;
+
+
+                showStep("created");
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Could not create the research workspace.\n\n" +
+                    error.message
+                );
+
+            } finally {
+
+                startResearchButton.disabled = false;
+
+                startResearchButton.textContent =
+                    "Start Research →";
+            }
+        });
+    }
+
+
+    // ========================================================
+    // Open workspace
+    // ========================================================
+
+    const openWorkspaceButton =
+        document.getElementById(
+            "open-workspace-button"
+        );
+
+    if (openWorkspaceButton) {
+
+        openWorkspaceButton.addEventListener("click", () => {
+
+            console.log(
+                "Workspace opening is next."
+            );
+
+            alert(
+                "Workspace navigation will be connected next."
+            );
+        });
+    }
+
+
+    // ========================================================
+    // Sidebar navigation
+    // ========================================================
+
+    const navItems =
+        document.querySelectorAll(".nav-item");
+
+    const pages = {
+        research: document.querySelector(".intake"),
+        workspaces: document.getElementById("workspaces-page"),
+        runs: document.getElementById("runs-page"),
+        knowledge: document.getElementById("knowledge-page")
+    };
+
 
     function showPage(pageName) {
 
-        // Hide everything first
-        if (intakePage) {
-            intakePage.classList.remove("page-hidden");
+        if (pages.research) {
+            pages.research.classList.remove(
+                "page-hidden"
+            );
         }
 
-        if (workspacesPage) {
-            workspacesPage.classList.remove("active");
+        if (pages.workspaces) {
+            pages.workspaces.classList.remove("active");
         }
 
-        if (runsPage) {
-            runsPage.classList.remove("active");
+        if (pages.runs) {
+            pages.runs.classList.remove("active");
         }
 
-        if (knowledgePage) {
-            knowledgePage.classList.remove("active");
+        if (pages.knowledge) {
+            pages.knowledge.classList.remove("active");
         }
 
 
-        // Show requested page
         if (pageName === "research") {
 
-            // Research is the original intake layout.
-            if (intakePage) {
-                intakePage.classList.remove("page-hidden");
+            if (pages.research) {
+                pages.research.classList.remove(
+                    "page-hidden"
+                );
             }
 
-        } else if (pageName === "workspaces") {
+        } else {
 
-            if (intakePage) {
-                intakePage.classList.add("page-hidden");
+            if (pages.research) {
+                pages.research.classList.add(
+                    "page-hidden"
+                );
             }
 
-            if (workspacesPage) {
-                workspacesPage.classList.add("active");
-            }
-
-        } else if (pageName === "runs") {
-
-            if (intakePage) {
-                intakePage.classList.add("page-hidden");
-            }
-
-            if (runsPage) {
-                runsPage.classList.add("active");
-            }
-
-        } else if (pageName === "knowledge") {
-
-            if (intakePage) {
-                intakePage.classList.add("page-hidden");
-            }
-
-            if (knowledgePage) {
-                knowledgePage.classList.add("active");
+            if (pages[pageName]) {
+                pages[pageName].classList.add("active");
             }
         }
     }
@@ -260,44 +564,16 @@ document.addEventListener("DOMContentLoaded", () => {
             button.classList.add("active");
 
             showPage(pageName);
-
-            console.log(
-                "Navigation:",
-                pageName
-            );
         });
     });
 
-// --------------------------------------------------------
-// Sidebar minimize
-// --------------------------------------------------------
 
-if (sidebarToggle && app) {
+    // ========================================================
+    // Startup
+    // ========================================================
 
-    sidebarToggle.addEventListener("click", () => {
-
-        const collapsed =
-            app.classList.toggle("sidebar-collapsed");
-
-        sidebarToggle.setAttribute(
-            "aria-expanded",
-            String(!collapsed)
-        );
-
-        sidebarToggle.setAttribute(
-            "aria-label",
-            collapsed
-                ? "Expand sidebar"
-                : "Minimize sidebar"
-        );
-    });
-}
-
-
-    // --------------------------------------------------------
-    // 7. Debug confirmation
-    // --------------------------------------------------------
-
-    console.log("GredForge frontend loaded successfully.");
+    console.log(
+        "GredForge frontend loaded successfully."
+    );
 
 });

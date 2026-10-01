@@ -228,41 +228,326 @@
 
     <section id="field-stage" class="stage-overlay">
 
-        <div class="stage-card">
+    <div class="stage-card">
 
-            <span class="eyebrow">RESEARCH INTAKE / 02</span>
+        <!-- ================================================
+             STEP 1: FIELD
+             ================================================ -->
 
-            <h2>What field does this question belong to?</h2>
+        <div id="field-step" class="intake-step active">
+
+            <span class="eyebrow">
+                RESEARCH INTAKE / 02
+            </span>
+
+            <h2>
+                What field does this question belong to?
+            </h2>
 
             <p>
-                This helps GredForge understand which research tools,
-                workflows and knowledge structures may be relevant.
+                This helps GredForge understand which research
+                tools, workflows and knowledge structures may
+                be relevant.
             </p>
 
             <div class="field-grid">
 
-                <button class="field-option">Finance</button>
-                <button class="field-option">Economics</button>
-                <button class="field-option">Computer Science</button>
-                <button class="field-option">Biology</button>
-                <button class="field-option">Engineering</button>
-                <button class="field-option">History</button>
-                <button class="field-option">Social Science</button>
-                <button class="field-option">Other</button>
+                <button class="field-option" data-field="Finance">
+                    Finance
+                </button>
+
+                <button class="field-option" data-field="Economics">
+                    Economics
+                </button>
+
+                <button class="field-option" data-field="Computer Science">
+                    Computer Science
+                </button>
+
+                <button class="field-option" data-field="Biology">
+                    Biology
+                </button>
+
+                <button class="field-option" data-field="Engineering">
+                    Engineering
+                </button>
+
+                <button class="field-option" data-field="History">
+                    History
+                </button>
+
+                <button class="field-option" data-field="Social Science">
+                    Social Science
+                </button>
+
+                <button class="field-option" data-field="Other">
+                    Other
+                </button>
 
             </div>
 
-            <button
-                id="back-button"
-                class="secondary-button"
-                type="button"
-            >
-                ← Back
-            </button>
+            <div class="stage-actions">
+
+                <button
+                    id="field-back-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    ← Back
+                </button>
+
+                <button
+                    id="field-continue-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    Continue →
+                </button>
+
+            </div>
 
         </div>
 
-    </section>
+
+        <!-- ================================================
+             STEP 2: OBJECTIVE
+             ================================================ -->
+
+        <div id="objective-step" class="intake-step">
+
+            <span class="eyebrow">
+                RESEARCH INTAKE / 03
+            </span>
+
+            <h2>
+                What do you want to accomplish?
+            </h2>
+
+            <p>
+                The objective determines the kind of research
+                process GredForge should prepare.
+            </p>
+
+            <div class="choice-list">
+
+                <button
+                    class="choice-option"
+                    data-objective="Explore a topic"
+                >
+                    <strong>Explore a topic</strong>
+                    <span>
+                        Build an initial understanding of a subject.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-objective="Answer a specific question"
+                >
+                    <strong>Answer a specific question</strong>
+                    <span>
+                        Investigate a defined research question.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-objective="Test a hypothesis"
+                >
+                    <strong>Test a hypothesis</strong>
+                    <span>
+                        Examine whether a proposed explanation holds.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-objective="Analyze data"
+                >
+                    <strong>Analyze data</strong>
+                    <span>
+                        Investigate patterns, relationships or results
+                        within a dataset.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-objective="Reproduce existing research"
+                >
+                    <strong>Reproduce existing research</strong>
+                    <span>
+                        Re-run or verify an existing study or experiment.
+                    </span>
+                </button>
+
+            </div>
+
+            <div class="stage-actions">
+
+                <button
+                    id="objective-back-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    ← Back
+                </button>
+
+                <button
+                    id="objective-continue-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    Continue →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================
+             STEP 3: RIGOR
+             ================================================ -->
+
+        <div id="rigor-step" class="intake-step">
+
+            <span class="eyebrow">
+                RESEARCH INTAKE / 04
+            </span>
+
+            <h2>
+                How rigorous should this research be?
+            </h2>
+
+            <p>
+                This controls how much structure, validation and
+                reproducibility GredForge should require.
+            </p>
+
+            <div class="choice-list">
+
+                <button
+                    class="choice-option"
+                    data-rigor="quick_exploration"
+                >
+                    <strong>Quick exploration</strong>
+                    <span>
+                        Lightweight investigation for early understanding.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-rigor="structured_research"
+                >
+                    <strong>Structured research</strong>
+                    <span>
+                        Defined scope, sources, tasks and findings.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-rigor="reproducible_research"
+                >
+                    <strong>Reproducible research</strong>
+                    <span>
+                        Research should be recorded so the work can
+                        be rerun and verified.
+                    </span>
+                </button>
+
+                <button
+                    class="choice-option"
+                    data-rigor="advanced_custom"
+                >
+                    <strong>Advanced / custom</strong>
+                    <span>
+                        Full control over the research process,
+                        validation and execution requirements.
+                    </span>
+                </button>
+
+            </div>
+
+            <div class="stage-actions">
+
+                <button
+                    id="rigor-back-button"
+                    class="secondary-button"
+                    type="button"
+                >
+                    ← Back
+                </button>
+
+                <button
+                    id="start-research-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    Start Research →
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================
+             STEP 4: CREATED
+             ================================================ -->
+
+        <div id="created-step" class="intake-step">
+
+            <span class="eyebrow">
+                RESEARCH INITIALIZED
+            </span>
+
+            <h2>
+                Your research workspace is ready.
+            </h2>
+
+            <p id="created-message">
+                GredForge has created your research workspace.
+            </p>
+
+            <div class="created-summary">
+
+                <div>
+                    <span>FIELD</span>
+                    <strong id="summary-field"></strong>
+                </div>
+
+                <div>
+                    <span>OBJECTIVE</span>
+                    <strong id="summary-objective"></strong>
+                </div>
+
+                <div>
+                    <span>RIGOR</span>
+                    <strong id="summary-rigor"></strong>
+                </div>
+
+            </div>
+
+            <div class="stage-actions">
+
+                <button
+                    id="open-workspace-button"
+                    class="primary-button"
+                    type="button"
+                >
+                    Open Workspace →
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
     <script src="/static/app.js"></script>

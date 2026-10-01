@@ -878,3 +878,110 @@ textarea:focus-visible {
 .app.sidebar-collapsed .sidebar-toggle span {
     transform: rotate(180deg);
 }
+/* ============================================================
+   Multi-step research intake
+   ============================================================ */
+
+.intake-step {
+    display: none;
+}
+
+.intake-step.active {
+    display: block;
+}
+
+.stage-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.choice-list {
+    display: grid;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.choice-option {
+    width: 100%;
+    padding: 18px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: var(--panel);
+    color: var(--text);
+
+    text-align: left;
+    cursor: pointer;
+
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+.choice-option:hover {
+    border-color: var(--accent);
+    background: var(--panel-soft);
+    transform: translateY(-1px);
+}
+
+.choice-option strong {
+    font-family: "Crimson Text", serif;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.choice-option span {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.choice-option.selected {
+    border-color: var(--accent);
+    background: var(--panel-soft);
+}
+
+.created-summary {
+    display: grid;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.created-summary > div {
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+}
+
+.created-summary span {
+    display: block;
+    margin-bottom: 5px;
+
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+}
+
+.created-summary strong {
+    color: var(--text);
+    font-size: 16px;
+}
+
+.stage-card h2 {
+    max-width: 800px;
+}
+
+.stage-card p {
+    max-width: 700px;
+}
