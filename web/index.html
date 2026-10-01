@@ -3,161 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>GredForge</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
+
     <div class="app">
 
+        <!-- Sidebar -->
         <aside class="sidebar">
+
             <div class="brand">
-                <div class="brand-mark">G</div>
-                <div>
+
+			<div class="brand-mark">
+    				<img src="/static/assets/logo.svg" alt="GredForge logo">
+			</div>
+
+                <div class="brand-text">
                     <h1>GredForge</h1>
                     <span>Research Infrastructure</span>
                 </div>
+
             </div>
 
-            <nav>
-                <button class="nav-item active" onclick="showPage('dashboard')">
-                    Dashboard
-                </button>
+	    <button
+   		id="sidebar-toggle"
+    		class="sidebar-toggle"
+    		type="button"
+    		aria-label="Minimize sidebar"
+    		aria-expanded="true"
+	    >
+    		<span>‹</span>
+	    </button>
 
-                <button class="nav-item" onclick="showPage('projects')">
-                    Projects
-                </button>
+            <nav class="sidebar-nav">
+    		<button class="nav-item active" data-page="research">
+        		<span>01</span>Research
+    		</button>
 
-                <button class="nav-item" onclick="showPage('workflows')">
-                    Workflows
-                </button>
+    		<button class="nav-item" data-page="workspaces">
+        		<span>02</span>Workspaces
+    		</button>
 
-                <button class="nav-item" onclick="showPage('runs')">
-                    Runs
-                </button>
-            </nav>
+    		<button class="nav-item" data-page="runs">
+        		<span>03</span>Runs
+   	 	</button>
+
+    		<button class="nav-item" data-page="knowledge">
+        		<span>04</span>Knowledge
+    		</button>
+	    </nav>
 
             <div class="sidebar-footer">
                 <span>LOCAL INSTANCE</span>
                 <strong>v0.1.0</strong>
             </div>
+
         </aside>
 
+
+        <!-- Main application -->
         <main class="main">
 
             <header class="topbar">
-                <div>
-                    <span class="eyebrow">RESEARCH COMMAND CENTER</span>
-                    <h2 id="page-title">Dashboard</h2>
+
+                <div class="topbar-left">
+                    <span class="eyebrow">GRED / RESEARCH</span>
                 </div>
 
-                <button class="primary-button" onclick="openModal()">
-                    + New Project
-                </button>
+                <div class="topbar-status">
+                    <span class="status-dot"></span>
+                    LOCAL
+                </div>
+
             </header>
 
-            <section id="dashboard" class="page active">
 
-                <div class="hero">
-                    <div>
-                        <span class="eyebrow">LOCAL-FIRST RESEARCH</span>
-                        <h3>Turn research into reproducible workflows.</h3>
-                        <p>
-                            Organize projects, execute workflows, and preserve
-                            research artifacts locally.
-                        </p>
-                    </div>
-                </div>
+            <!-- Research intake -->
+            <section class="intake">
 
-                <div class="stats">
-                    <div class="stat-card">
-                        <span>PROJECTS</span>
-                        <strong id="project-count">0</strong>
-                    </div>
+                <div class="intake-content">
 
-                    <div class="stat-card">
-                        <span>WORKFLOWS</span>
-                        <strong id="workflow-count">0</strong>
-                    </div>
+                    <span class="eyebrow">RESEARCH INTAKE</span>
 
-                    <div class="stat-card">
-                        <span>RUNS</span>
-                        <strong id="run-count">0</strong>
-                    </div>
-                </div>
+                    <h2 id="question-heading">
+                        <span id="typed-heading"></span>
+                        <span class="cursor">|</span>
+                    </h2>
 
-                <div class="section">
-                    <div class="section-header">
-                        <h3>Active Projects</h3>
-                        <button onclick="showPage('projects')">View all</button>
+                    <p class="intake-description">
+                        Start with the question. GredForge will help turn it
+                        into a structured, reproducible research process.
+                    </p>
+
+
+                    <div class="question-area">
+
+                        <label for="research-question">
+                            YOUR RESEARCH QUESTION
+                        </label>
+
+                        <textarea
+                            id="research-question"
+                            rows="5"
+                            placeholder="What are you trying to understand?"
+                            spellcheck="true"
+                        ></textarea>
+
                     </div>
 
-                    <div id="project-list" class="project-list"></div>
-                </div>
 
-            </section>
+                    <div class="intake-footer">
 
-            <section id="projects" class="page">
-                <div class="section-header">
-                    <div>
-                        <span class="eyebrow">WORKSPACES</span>
-                        <h3>Research Projects</h3>
+                        <span class="hint">
+                            Begin with a question, not a solution.
+                        </span>
+
+                        <button
+                            id="continue-button"
+                            class="primary-button"
+                            type="button"
+                        >
+                            Continue
+                            <span>→</span>
+                        </button>
+
                     </div>
 
-                    <button class="primary-button" onclick="openModal()">
-                        + Create Project
-                    </button>
                 </div>
 
-                <div id="all-projects" class="project-list"></div>
-            </section>
-
-            <section id="workflows" class="page">
-                <div class="empty-state">
-                    <span class="eyebrow">PHASE 3</span>
-                    <h3>Workflow Engine</h3>
-                    <p>Workflow execution will appear here.</p>
-                </div>
-            </section>
-
-            <section id="runs" class="page">
-                <div class="empty-state">
-                    <span class="eyebrow">EXECUTION HISTORY</span>
-                    <h3>Runs</h3>
-                    <p>Workflow runs will appear here.</p>
-                </div>
             </section>
 
         </main>
+
+
+        <!-- Brain dump panel -->
+        <aside id="brain-dump-panel" class="brain-dump-panel">
+
+            <button
+                id="brain-dump-toggle"
+                class="brain-dump-toggle"
+                type="button"
+                aria-label="Close brain dump"
+                aria-expanded="true"
+            >
+                <span>‹</span>
+            </button>
+
+            <div class="brain-dump-content">
+
+                <span class="eyebrow">CLEAR YOUR HEAD</span>
+
+                <h2>What's on your mind today?</h2>
+
+                <p>
+                    Put the distractions here. Grievances, reminders,
+                    unfinished thoughts, random nonsense. You can deal
+                    with them later.
+                </p>
+
+                <textarea
+                    id="brain-dump"
+                    placeholder="Write it down..."
+                ></textarea>
+
+                <div class="brain-dump-footer">
+                    <span>PRIVATE TO THIS SESSION</span>
+                </div>
+
+            </div>
+
+        </aside>
+
     </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-card">
-            <button class="close" onclick="closeModal()">×</button>
 
-            <span class="eyebrow">NEW RESEARCH PROJECT</span>
-            <h3>Create a project</h3>
+    <!-- Next intake stage -->
+	<section id="workspaces-page" class="app-page">
+    		<div class="page-content">
+        		<span class="eyebrow">GRED / WORKSPACES</span>
+        		<h2>Your research workspaces.</h2>
+        		<p>
+           			 Research projects created through GredForge will appear here.
+        		</p>
 
-            <form onsubmit="createProject(event)">
-                <label>
-                    Project name
-                    <input id="project-name" required
-                           placeholder="e.g. Market Regime Analysis">
-                </label>
+        		<div id="workspace-list" class="workspace-list">
+            			<div class="empty-state">
+                			No research workspaces yet.
+            			</div>
+        		</div>
+    		</div>
+	</section>
 
-                <label>
-                    Description
-                    <textarea id="project-description"
-                              placeholder="What are you researching?"></textarea>
-                </label>
+	<section id="runs-page" class="app-page">
+    		<div class="page-content">
+        		<span class="eyebrow">GRED / RUNS</span>
+        		<h2>Research runs.</h2>
+        		<p>
+            			Executions, results and reproducibility records will appear here.
+        		</p>
+   		 </div>
+	</section>
 
-                <button class="primary-button" type="submit">
-                    Create Project
-                </button>
-            </form>
+	<section id="knowledge-page" class="app-page">
+    		<div class="page-content">
+        		<span class="eyebrow">GRED / KNOWLEDGE</span>
+        		<h2>Research knowledge.</h2>
+        		<p>
+            			Validated findings and reusable research knowledge will live here.
+        		</p>
+    		</div>
+	</section>
+
+    <section id="field-stage" class="stage-overlay">
+
+        <div class="stage-card">
+
+            <span class="eyebrow">RESEARCH INTAKE / 02</span>
+
+            <h2>What field does this question belong to?</h2>
+
+            <p>
+                This helps GredForge understand which research tools,
+                workflows and knowledge structures may be relevant.
+            </p>
+
+            <div class="field-grid">
+
+                <button class="field-option">Finance</button>
+                <button class="field-option">Economics</button>
+                <button class="field-option">Computer Science</button>
+                <button class="field-option">Biology</button>
+                <button class="field-option">Engineering</button>
+                <button class="field-option">History</button>
+                <button class="field-option">Social Science</button>
+                <button class="field-option">Other</button>
+
+            </div>
+
+            <button
+                id="back-button"
+                class="secondary-button"
+                type="button"
+            >
+                ← Back
+            </button>
+
         </div>
-    </div>
+
+    </section>
+
 
     <script src="/static/app.js"></script>
+
 </body>
 </html>
