@@ -32,7 +32,7 @@ collection of special cases.
 
 ------------------------------------------------------------------------
 
-# 2. High-Level Architecture
+# 2. The Architecture
 
 ``` text
                          GREDFORGE
@@ -51,7 +51,7 @@ collection of special cases.
 
 ------------------------------------------------------------------------
 
-# 3. GredForge Core
+# 3. GredForge Core Stack
 
 The core should understand universal research concepts:
 
