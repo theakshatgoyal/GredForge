@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from gredforge.api.research import router as research_router
 from gredforge.api.projects import router as projects_router
 from gredforge.storage.database import initialize_database
 
@@ -26,6 +27,7 @@ app.mount(
 
 
 app.include_router(projects_router)
+app.include_router(research_router)
 
 
 @app.on_event("startup")

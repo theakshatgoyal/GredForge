@@ -478,16 +478,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (openWorkspaceButton) {
 
-        openWorkspaceButton.addEventListener("click", () => {
+        openWorkspaceButton.addEventListener("click", async () => {
+   		fieldStage.classList.remove("open");
 
-            console.log(
-                "Workspace opening is next."
-            );
+    		showPage("workspaces");
 
-            alert(
-                "Workspace navigation will be connected next."
-            );
-        });
+    		await loadWorkspaces();
+});
     }
 
 
@@ -567,7 +564,74 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+async function loadWorkspaces() {
+    const workspaceList = document.getElementById("workspace-list");
 
+    if (!workspaceList) {
+        return;
+    }
+
+    workspaceList.innerHTML = `
+        <div class="empty-state">
+            Loading research workspaces...
+        </div>
+    `;
+
+    try {
+        const response = await fetch("/api/projects");
+
+        if (!response.ok) {
+            throw new Error("Failed to load workspaces");
+        }
+
+        const projects = await response.json();
+
+        if (projects.length === 0) {
+            workspaceList.innerHTML = `
+                <div class="empty-state">
+                    No research workspaces yet.
+                </div>
+            `;
+            return;
+        }
+
+        workspaceList.innerHTML = projects.map(project => `
+            <article class="workspace-card">
+                <div class="workspace-card-header">
+                    <span class="eyebrow">
+                        RESEARCH / ${project.status.toUpperCase()}
+                    </span>
+                    <span class="workspace-id">
+                        #${project.id}
+                    </span>
+                </div>
+
+                <h3>${escapeHtml(project.name)}</h3>
+
+                <div class="workspace-meta">
+                    <span>${escapeHtml(project.field || "Unspecified field")}</span>
+                    <span>${escapeHtml(project.objective || "No objective")}</span>
+                    <span>${escapeHtml(project.rigor || "No rigor")}</span>
+                </div>
+            </article>
+        `).join("");
+
+    } catch (error) {
+        console.error(error);
+
+        workspaceList.innerHTML = `
+            <div class="empty-state">
+                Failed to load research workspaces.
+            </div>
+        `;
+    }
+}
+
+function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = value;
+    return div.innerHTML;
+}
     // ========================================================
     // Startup
     // ========================================================
